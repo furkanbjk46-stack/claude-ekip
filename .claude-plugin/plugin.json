@@ -1,0 +1,10 @@
+{
+  "name": "ekip-paneli",
+  "version": "0.1.0",
+  "description": "Usta–işçi düzeni: ana oturum işi zorluğuna göre Haiku, Sonnet, Opus ve Fable işçilerine dağıtır; yan panelde hangi modelin ne yaptığını ve token kullanımını canlı gösterir.",
+  "types": "./types/index.d.ts",
+  "license": "MIT",
+  "author": {
+    "name": "furkanbjk46-stack"
+  }
+}

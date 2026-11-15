@@ -1,0 +1,14 @@
+{
+  "name": "claude-ekip",
+  "description": "Claude Code için usta–işçi düzeni ve canlı Ekip paneli.",
+  "owner": {
+    "name": "furkanbjk46-stack"
+  },
+  "plugins": [
+    {
+      "name": "ekip-paneli",
+      "source": "./",
+      "description": "Usta–işçi düzeni: ana oturum işi zorluğuna göre Haiku, Sonnet, Opus ve Fable işçilerine dağıtır; yan panelde hangi modelin ne yaptığını ve token kullanımını canlı gösterir."
+    }
+  ]
+}
