@@ -363,15 +363,15 @@ export const register: Register = on => {
           running > 0 ? `Ekip · ${running} çalışıyor` : 'Ekip · boşta',
           `~${money(totalCost)}`,
           <Box flexDirection="column" gap="md">
-            {list.map(w => {
-              const st = w.status === 'calisiyor' ? 'çalışıyor' : w.status === 'bitti' ? 'bitti' : 'bekliyor'
-              return row(
-                'w-' + w.id,
-                `${w.id === 'main' ? 'Usta' : 'İşçi'} · ${w.label}`,
-                `${shortModel(w.model)} · ${st}`,
-                `%${pct(tokens(w))}`,
-                tokens(w) / Math.max(1, total),
-              )
+            {/* Her model ailesi tek satır: aynı modeldeki usta ve işçiler toplanır (ör. 2 Opus işi = tek %) */}
+            {ORDER.filter(f => list.some(w => familyOf(w.model) === f)).map(f => {
+              const members = list.filter(w => familyOf(w.model) === f)
+              const tok = members.reduce((s, w) => s + tokens(w), 0)
+              const workers = members.filter(w => w.id !== 'main').length
+              const hasMain = members.some(w => w.id === 'main')
+              const st = members.some(w => w.status === 'calisiyor') ? 'çalışıyor' : hasMain ? 'bekliyor' : 'bitti'
+              const who = [hasMain ? 'usta' : '', workers > 0 ? `${workers} işçi` : ''].filter(Boolean).join(' + ')
+              return row('w-' + f, shortModel(members[0].model), `${who} · ${st}`, `%${pct(tok)}`, tok / Math.max(1, total))
             })}
             {ROSTER.filter(r => !list.some(w => w.id !== 'main' && familyOf(w.model) === r.fam)).map(r =>
               row('k-' + r.fam, `İşçi · ${r.role}`, `${FAMILY[r.fam].name} · henüz iş verilmedi`, '—', 0),
